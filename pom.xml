@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.jnoee</groupId>
 	<artifactId>xo-dependencies</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>xo-dependencies</name>
@@ -247,7 +247,7 @@
 		<url>https://github.com/Jnoee/xo-dependencies.git</url>
 		<connection>scm:git:https://github.com/Jnoee/xo-dependencies.git</connection>
 		<developerConnection>scm:git:https://github.com/Jnoee/xo-dependencies.git</developerConnection>
-		<tag>xo-dependencies-1.0.0</tag>
+		<tag>HEAD</tag>
 	</scm>
 	
 	<distributionManagement>
