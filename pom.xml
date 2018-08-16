@@ -250,4 +250,15 @@
 		<developerConnection>scm:git:https://github.com/Jnoee/xo-dependencies.git</developerConnection>
 		<tag>HEAD</tag>
 	</scm>
+	
+	<distributionManagement>
+		<snapshotRepository>
+			<id>oss</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+		</snapshotRepository>
+		<repository>
+			<id>oss</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+	</distributionManagement>
 </project>
