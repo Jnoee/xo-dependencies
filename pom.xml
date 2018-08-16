@@ -44,7 +44,7 @@
 		<docker.host>http://10.9.4.93:2376</docker.host>
 		<docker.server.id>docker-repo</docker.server.id>
 		<docker.image.prefix>registry.cn-shenzhen.aliyuncs.com/cntest-hub</docker.image.prefix>
-		<project.scm.id>git</project.scm.id>
+		<project.scm.id>github</project.scm.id>
 
 		<druid-spring-boot-starter.version>1.1.10</druid-spring-boot-starter.version>
 		<shiro.version>1.4.0</shiro.version>
