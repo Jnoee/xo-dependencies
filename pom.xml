@@ -41,8 +41,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
+		<sonar-maven-plugin.version>3.4.1.1168</sonar-maven-plugin.version>
 		<maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
-		<maven-release-plugin.version>2.5.3</maven-release-plugin.version>
 		<maven-scm-provider-jgit.version>1.9.5</maven-scm-provider-jgit.version>
 		<maven-surefire-report-plugin.version>2.22.0</maven-surefire-report-plugin.version>
 		<jacoco-maven-plugin.version>0.8.1</jacoco-maven-plugin.version>
@@ -160,6 +160,11 @@
 					</executions>
 				</plugin>
 				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>sonar-maven-plugin</artifactId>
+					<version>${sonar-maven-plugin.version}</version>
+				</plugin>
+				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-surefire-report-plugin</artifactId>
 					<version>${maven-surefire-report-plugin.version}</version>
@@ -200,7 +205,7 @@
 					<configuration>
 						<dockerHost>${docker.host}</dockerHost>
 						<serverId>${docker.server.id}</serverId>
-						<dockerDirectory>${project.build.directory}/classes</dockerDirectory>
+						<dockerDirectory>${project.build.directory}/docker</dockerDirectory>
 						<imageName>${docker.image.prefix}/${project.artifactId}</imageName>
 						<imageTags>
 							<imageTag>${project.version}</imageTag>
@@ -243,7 +248,7 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-	
+
 	<distributionManagement>
 		<snapshotRepository>
 			<id>oss</id>
