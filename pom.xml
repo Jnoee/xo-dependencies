@@ -50,7 +50,7 @@
 		<docker-maven-plugin.version>1.1.1</docker-maven-plugin.version>
 		<docker.host>http://10.9.4.93:2376</docker.host>
 		<docker.server.id>docker-repo</docker.server.id>
-		<docker.image.prefix>registry.cn-shenzhen.aliyuncs.com/cntest-hub</docker.image.prefix>
+		<docker.image.prefix>registry.cn-shenzhen.aliyuncs.com/jnoee</docker.image.prefix>
 		<project.scm.id>github</project.scm.id>
 		
 		<spring-cloud.version>Finchley.SR1</spring-cloud.version>
