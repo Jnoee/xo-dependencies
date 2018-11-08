@@ -63,7 +63,9 @@
 		<fst.version>2.56</fst.version>
 		<hibernate-springcache.version>1.0.2</hibernate-springcache.version>
 
-		<jxls.version>1.0.6</jxls.version>
+		<jxls.version>2.4.6</jxls.version>
+		<jxls-poi.version>1.0.15</jxls-poi.version>
+		<poi-tl.version>1.3.1</poi-tl.version>
 	</properties>
 
 	<dependencyManagement>
@@ -110,14 +112,19 @@
 			</dependency>
 
 			<dependency>
-				<groupId>net.sf.jxls</groupId>
-				<artifactId>jxls-core</artifactId>
+				<groupId>org.jxls</groupId>
+				<artifactId>jxls</artifactId>
 				<version>${jxls.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>net.sf.jxls</groupId>
-				<artifactId>jxls-reader</artifactId>
-				<version>${jxls.version}</version>
+				<groupId>org.jxls</groupId>
+				<artifactId>jxls-poi</artifactId>
+				<version>${jxls-poi.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.deepoove</groupId>
+				<artifactId>poi-tl</artifactId>
+				<version>${poi-tl.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
