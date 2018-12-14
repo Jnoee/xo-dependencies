@@ -207,6 +207,9 @@
 					<value>true</value>
 				</property>
 			</activation>
+			<properties>
+				<maven.javadoc.skip>false</maven.javadoc.skip>
+			</properties>
 			<build>
 				<plugins>
 					<plugin>
