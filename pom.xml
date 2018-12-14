@@ -1,9 +1,8 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.jnoee</groupId>
 	<artifactId>xo-dependencies</artifactId>
-	<version>1.0.5-SNAPSHOT</version>
+	<version>1.0.5</version>
 	<packaging>pom</packaging>
 
 	<name>xo-dependencies</name>
@@ -49,6 +48,7 @@
 		<maven-scm-provider-jgit.version>1.9.5</maven-scm-provider-jgit.version>
 		<maven-surefire-report-plugin.version>2.22.0</maven-surefire-report-plugin.version>
 		<jacoco-maven-plugin.version>0.8.1</jacoco-maven-plugin.version>
+		<jgitflow-maven-plugin.version>1.0.0</jgitflow-maven-plugin.version>
 		<project.scm.id>github</project.scm.id>
 
 		<spring-cloud.version>Finchley.SR1</spring-cloud.version>
@@ -181,6 +181,17 @@
 						</execution>
 					</executions>
 				</plugin>
+				<plugin>
+					<groupId>com.manamind.jgitflow</groupId>
+					<artifactId>jgitflow-maven-plugin</artifactId>
+					<version>${jgitflow-maven-plugin.version}</version>
+					<configuration>
+						<pushReleases>true</pushReleases>
+						<allowSnapshots>true</allowSnapshots>
+						<username>${git.username}</username>
+						<password>${git.password}</password>
+					</configuration>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 	</build>
@@ -191,10 +202,13 @@
 			<id>release-sign-artifacts</id>
 			<activation>
 				<property>
-					<name>performRelease</name>
+					<name>release</name>
 					<value>true</value>
 				</property>
 			</activation>
+			<properties>
+				<maven.javadoc.skip>false</maven.javadoc.skip>
+			</properties>
 			<build>
 				<plugins>
 					<plugin>
