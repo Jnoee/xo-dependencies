@@ -49,6 +49,7 @@
 		<maven-scm-provider-jgit.version>1.9.5</maven-scm-provider-jgit.version>
 		<maven-surefire-report-plugin.version>2.22.0</maven-surefire-report-plugin.version>
 		<jacoco-maven-plugin.version>0.8.1</jacoco-maven-plugin.version>
+		<jgitflow-maven-plugin.version>1.0.0</jgitflow-maven-plugin.version>
 		<project.scm.id>github</project.scm.id>
 
 		<spring-cloud.version>Finchley.SR1</spring-cloud.version>
@@ -181,6 +182,17 @@
 						</execution>
 					</executions>
 				</plugin>
+				<plugin>
+					<groupId>com.manamind.jgitflow</groupId>
+					<artifactId>jgitflow-maven-plugin</artifactId>
+					<version>${jgitflow-maven-plugin.version}</version>
+					<configuration>
+						<pushReleases>true</pushReleases>
+						<allowSnapshots>true</allowSnapshots>
+						<username>${git.username}</username>
+						<password>${git.password}</password>
+					</configuration>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 	</build>
@@ -191,7 +203,7 @@
 			<id>release-sign-artifacts</id>
 			<activation>
 				<property>
-					<name>performRelease</name>
+					<name>release</name>
 					<value>true</value>
 				</property>
 			</activation>
