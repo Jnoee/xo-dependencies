@@ -1,8 +1,9 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.jnoee</groupId>
 	<artifactId>xo-dependencies</artifactId>
-	<version>1.0.4</version>
+	<version>1.0.5-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>xo-dependencies</name>
@@ -35,23 +36,21 @@
 
 	<properties>
 		<java.version>1.8</java.version>
-		<maven.compiler.source>${java.version}</maven.compiler.source>
-		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
+		<maven.test.skip>false</maven.test.skip>
+		<maven.javadoc.skip>true</maven.javadoc.skip>
 
 		<sonar-maven-plugin.version>3.4.1.1168</sonar-maven-plugin.version>
 		<maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
 		<maven-scm-provider-jgit.version>1.9.5</maven-scm-provider-jgit.version>
 		<maven-surefire-report-plugin.version>2.22.0</maven-surefire-report-plugin.version>
 		<jacoco-maven-plugin.version>0.8.1</jacoco-maven-plugin.version>
-		<jgitflow-maven-plugin.version>1.0.0</jgitflow-maven-plugin.version>
-		<docker-maven-plugin.version>1.1.1</docker-maven-plugin.version>
-		<docker.host>http://10.9.4.93:2376</docker.host>
-		<docker.server.id>docker-repo</docker.server.id>
-		<docker.image.prefix>registry.cn-shenzhen.aliyuncs.com/jnoee</docker.image.prefix>
 		<project.scm.id>github</project.scm.id>
-		
+
 		<spring-cloud.version>Finchley.SR1</spring-cloud.version>
 
 		<druid-spring-boot-starter.version>1.1.10</druid-spring-boot-starter.version>
@@ -77,7 +76,7 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
-			
+
 			<dependency>
 				<groupId>io.springfox</groupId>
 				<artifactId>springfox-swagger2</artifactId>
@@ -144,19 +143,6 @@
 					</executions>
 				</plugin>
 				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-gpg-plugin</artifactId>
-					<version>${maven-gpg-plugin.version}</version>
-					<executions>
-						<execution>
-							<phase>verify</phase>
-							<goals>
-								<goal>sign</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
-				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>sonar-maven-plugin</artifactId>
 					<version>${sonar-maven-plugin.version}</version>
@@ -195,78 +181,47 @@
 						</execution>
 					</executions>
 				</plugin>
-				<plugin>
-					<groupId>com.spotify</groupId>
-					<artifactId>docker-maven-plugin</artifactId>
-					<version>${docker-maven-plugin.version}</version>
-					<configuration>
-						<dockerHost>${docker.host}</dockerHost>
-						<serverId>${docker.server.id}</serverId>
-						<dockerDirectory>${project.build.directory}/docker</dockerDirectory>
-						<imageName>${docker.image.prefix}/${project.artifactId}</imageName>
-						<imageTags>
-							<imageTag>${project.version}</imageTag>
-							<imageTag>latest</imageTag>
-						</imageTags>
-						<resources>
-							<resource>
-								<directory>${project.build.directory}</directory>
-								<include>${project.build.finalName}.jar</include>
-							</resource>
-						</resources>
-					</configuration>
-					<executions>
-						<execution>
-							<phase>package</phase>
-							<goals>
-								<goal>build</goal>
-							</goals>
-						</execution>
-						<execution>
-							<id>push-image</id>
-							<phase>deploy</phase>
-							<goals>
-								<goal>push</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
-				<plugin>
-					<groupId>com.manamind.jgitflow</groupId>
-					<artifactId>jgitflow-maven-plugin</artifactId>
-					<version>${jgitflow-maven-plugin.version}</version>
-					<configuration>
-						<pushReleases>true</pushReleases>
-						<allowSnapshots>true</allowSnapshots>
-						<username>${git.username}</username>
-						<password>${git.password}</password>
-					</configuration>
-				</plugin>
 			</plugins>
 		</pluginManagement>
 	</build>
 
-	<distributionManagement>
-		<snapshotRepository>
-			<id>oss</id>
-			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-		</snapshotRepository>
-		<repository>
-			<id>oss</id>
-			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-		</repository>
-	</distributionManagement>
-
 	<profiles>
+		<!-- 正式发布到中心仓库时启用 -->
 		<profile>
-			<id>sign</id>
+			<id>release-sign-artifacts</id>
+			<activation>
+				<property>
+					<name>performRelease</name>
+					<value>true</value>
+				</property>
+			</activation>
 			<build>
 				<plugins>
 					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-gpg-plugin</artifactId>
+						<version>${maven-gpg-plugin.version}</version>
+						<executions>
+							<execution>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
 					</plugin>
 				</plugins>
 			</build>
+			<distributionManagement>
+				<snapshotRepository>
+					<id>oss</id>
+					<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+				</snapshotRepository>
+				<repository>
+					<id>oss</id>
+					<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+				</repository>
+			</distributionManagement>
 		</profile>
 	</profiles>
 </project>
