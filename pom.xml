@@ -113,11 +113,6 @@
 
 			<dependency>
 				<groupId>org.jxls</groupId>
-				<artifactId>jxls</artifactId>
-				<version>${jxls.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.jxls</groupId>
 				<artifactId>jxls-poi</artifactId>
 				<version>${jxls-poi.version}</version>
 			</dependency>
