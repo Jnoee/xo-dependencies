@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.jnoee</groupId>
 	<artifactId>xo-dependencies</artifactId>
-	<version>1.0.7</version>
+	<version>1.0.8</version>
 	<packaging>pom</packaging>
 
 	<name>xo-dependencies</name>
@@ -49,6 +49,10 @@
 		<maven-scm-provider-jgit.version>1.11.2</maven-scm-provider-jgit.version>
 		<maven-surefire-report-plugin.version>2.22.2</maven-surefire-report-plugin.version>
 		<jacoco-maven-plugin.version>0.8.4</jacoco-maven-plugin.version>
+		<docker-maven-plugin.version>1.1.1</docker-maven-plugin.version>
+		<docker.host>http://10.9.4.93:2376</docker.host>
+		<docker.server.id>docker-repo</docker.server.id>
+		<docker.image.prefix>registry.cn-shenzhen.aliyuncs.com/cntest-hub</docker.image.prefix>
 		<jgitflow-maven-plugin.version>1.0.0</jgitflow-maven-plugin.version>
 		<project.scm.id>github</project.scm.id>
 		
@@ -196,6 +200,37 @@
 							<phase>test</phase>
 							<goals>
 								<goal>report</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>com.spotify</groupId>
+					<artifactId>docker-maven-plugin</artifactId>
+					<version>${docker-maven-plugin.version}</version>
+					<configuration>
+						<dockerHost>${docker.host}</dockerHost>
+						<serverId>${docker.server.id}</serverId>
+						<dockerDirectory>${project.build.directory}</dockerDirectory>
+						<imageName>${docker.image.prefix}/${project.artifactId}</imageName>
+						<imageTags>
+							<imageTag>${project.version}</imageTag>
+							<imageTag>latest</imageTag>
+						</imageTags>
+					</configuration>
+					<executions>
+						<execution>
+							<id>build-image</id>
+							<phase>install</phase>
+							<goals>
+								<goal>build</goal>
+							</goals>
+						</execution>
+						<execution>
+							<id>push-image</id>
+							<phase>deploy</phase>
+							<goals>
+								<goal>push</goal>
 							</goals>
 						</execution>
 					</executions>
